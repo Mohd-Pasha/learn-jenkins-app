@@ -2,6 +2,8 @@ pipeline {
     agent any
 
     stages {
+
+        //This is the build stage to build the project
         
         stage('Build') {
             agent {
@@ -23,6 +25,8 @@ pipeline {
                
             }
         }
+
+        // tHIS IS THE Test repo to test the conditions
          stage('Test') {
             agent {
               docker{
@@ -42,7 +46,29 @@ pipeline {
                
             }
         }
+
+         stage('E2E') {
+            agent {
+              docker{
+                    image 'mcr.microsoft.com/playwright:v1.63.0-noble'
+                    reuseNode true
+                    // args '-u root:root'
+              }
+            }
+            
+            steps {
+               echo "Test stage is under go.."
+               sh '''
+                 npm install serve
+                 node_modules\.bin\serve -s build
+                 npx playwright test
+               '''
+               
+               
+            }
+        }
     }
+    //POST COMMAND
 
     post{
         always{
