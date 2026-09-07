@@ -27,6 +27,7 @@ pipeline {
             
             steps {
                echo "Test stage is under go.."
+               sh 'test -f build/index.html'
                
             }
         }
