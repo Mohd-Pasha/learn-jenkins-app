@@ -60,7 +60,7 @@ pipeline {
                echo "Test stage is under go.."
                sh '''
                  npm install serve
-                 node_modules\.bin\serve -s build
+                 node_modules/.bin/serve -s build
                  npx playwright test
                '''
                
