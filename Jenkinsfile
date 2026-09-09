@@ -47,26 +47,27 @@ pipeline {
             }
         }
 
-        //  stage('E2E') {
-        //     agent {
-        //       docker{
-        //             image 'mcr.microsoft.com/playwright:v1.63.0-noble'
-        //             reuseNode true
-        //             // args '-u root:root'
-        //       }
-        //     }
+         stage('E2E') {
+            agent {
+              docker{
+                    image 'node:20'
+                    reuseNode true
+                    // args '-u root:root'
+              }
+            }
             
-        //     steps {
-        //        echo "Test stage is under go.."
-        //        sh '''
-        //          npm install serve
-        //          node_modules/.bin/serve -s build
-        //          npx playwright test
-        //        '''
+            steps {
+               echo "Test stage is under go.."
+               sh '''
+                 npx playwright install chromium
+                 npm install serve
+                 node_modules/.bin/serve -s build
+                 npx playwright test
+               '''
                
                
-        //     }
-        // }
+            }
+        }
     }
     //POST COMMAND
 
